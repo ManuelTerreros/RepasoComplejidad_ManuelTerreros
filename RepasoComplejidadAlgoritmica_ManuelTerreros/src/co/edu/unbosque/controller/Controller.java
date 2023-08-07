@@ -5,23 +5,20 @@ import java.util.Random;
 import co.edu.unbosque.model.Lista;
 import co.edu.unbosque.model.Persona;
 import co.edu.unbosque.model.Recursividad;
+import co.edu.unbosque.view.Prueba;
 import co.edu.unbosque.view.Vista;
 
 public class Controller {
-	private Vista view = new Vista();;
+	private Vista view;
 	private Recursividad recur = new Recursividad();
 	private Lista lista = new Lista();
 	
 	public Controller() {
 		//ejecutarRecursividad();
-		//crearLista();
-		registrarPersona();
-		//ejecutarNumeroMayor();
-	}
-	
-	private void ejecutarNumeroMayor() {
-		lista.retornarNumeroMayor();
-		
+		//registrarPersona();
+		//view = new Vista();
+		//ventana();
+		probarOrdenamiento();
 	}
 
 	public void ejecutarRecursividad() {
@@ -32,17 +29,11 @@ public class Controller {
 		view.message(recur.mostrarRecorrido(num));
 	}
 	
-	public void crearLista() {
-		lista.registrarTabla();
-		lista.listarPersonas();
-		//lista.retornarNumeroMayor();
-	}
-	
 	public void registrarPersona() {
 		
 		Random rd = new Random();
 		String nombre, fechas;
-		int numerAleatoio = rd.nextInt(100)+1;
+		int numerAleatorio = rd.nextInt(100)+1;
 		
 		lista.registrarTabla();
 		
@@ -52,14 +43,19 @@ public class Controller {
 		view.message("Ingrese su fecha de nacimiento (AAAA/MM/DD)");
 		fechas = view.insertarString();
 		
-        lista.guardarPersona(new Persona(nombre, fechas, 80));
+        lista.guardarPersona(new Persona(nombre, fechas, 32));
 		lista.listarPersonas();
-		
-		
-		
 	}
 	
-	
+	public void ventana() {
+		Prueba pruebis = new Prueba();
+		pruebis.setVisible(true);
+	}
+
+	public void probarOrdenamiento() {
+		lista.registrarTabla();
+		lista.ordenarLista();
+	}
 	
 
 }
