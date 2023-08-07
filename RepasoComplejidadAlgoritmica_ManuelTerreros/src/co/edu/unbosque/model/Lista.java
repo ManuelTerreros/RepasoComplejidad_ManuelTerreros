@@ -8,35 +8,38 @@ public class Lista {
 	private Persona persona;
 //	private Random numAle;
 	private Nodo inicio, fin;
+	private Nodo alternoI, alternoF;
 	
 	public Lista() {
 		// TODO Auto-generated constructor stub
-		//persona = new Persona(null, null, 0);
 		inicio = null;
 		fin = null;
-		//registrarTabla();
+	}
+	
+	public void guardarTabla(Persona persona) {
+		Nodo nuevoNodo = new Nodo(persona);
+			if(inicio == null ) {
+				inicio = nuevoNodo;
+				fin = nuevoNodo;	
+			}else {
+				fin.setCola(nuevoNodo);
+				nuevoNodo.setCabeza(fin);	
+				fin = nuevoNodo;	
+			}		
 	}
 	
 	public void guardarPersona(Persona persona) {
 		Nodo nuevoNodo = new Nodo(persona);
+		int numeroMayor = retornarNumeroMayor();
+		int numeroNuevo = persona.getId();
 		
-		if(inicio == null ) {
-			
-	//		System.out.println("Entro aca");
-			inicio = nuevoNodo;
-			fin = nuevoNodo;
-			
-					
+		if(numeroNuevo > numeroMayor) {
+			System.out.println("Funcionooooo");
 		}else {
-	//		System.out.println("Entro a crear uno adicional");
 			fin.setCola(nuevoNodo);
 			nuevoNodo.setCabeza(fin);	
-			fin = nuevoNodo;
-			
+			fin = nuevoNodo;	
 		}
-		
-		
-		
 	}
 	
 	public void registrarTabla() {
@@ -52,16 +55,16 @@ public class Lista {
 		Persona persona9 = new Persona("Sandra Ruiz", "1970/12/24",2);
 		Persona persona10 = new Persona("Marcos Solano", "2001/06/25",47);
 		
-		guardarPersona(persona1);
-		guardarPersona(persona2);
-		guardarPersona(persona3);
-		guardarPersona(persona4);
-		guardarPersona(persona5);
-		guardarPersona(persona6);
-		guardarPersona(persona7);
-		guardarPersona(persona8);
-		guardarPersona(persona9);
-		guardarPersona(persona10);
+		guardarTabla(persona1);
+		guardarTabla(persona2);
+		guardarTabla(persona3);
+		guardarTabla(persona4);
+		guardarTabla(persona5);
+		guardarTabla(persona6);
+		guardarTabla(persona7);
+		guardarTabla(persona8);
+		guardarTabla(persona9);
+		guardarTabla(persona10);
 	}
 	
 	public void listarPersonas() {
@@ -81,13 +84,19 @@ public class Lista {
 	public int retornarNumeroMayor() {
 		// Como obtengo el numero mayor?
 		// listarPersonas(); -> Esto no me serviria ya que llamo la lista, y pa que?
-		int aux = inicio.getPersona().getId();
-		//int nodoActual = 
+		Nodo nodoActual = inicio;
+		//int aux = nodoActual.getPersona().getId();
+		int numMayor = -1;
 		
-		
-		
-		
-		return 0;
+		while(nodoActual != null) {
+			int aux = nodoActual.getPersona().getId();
+			if(aux  > numMayor) {
+				numMayor = aux;
+			}
+			nodoActual = nodoActual.getCola();
+		}
+		System.out.println(numMayor);
+		return numMayor;
 	}
 	
 }

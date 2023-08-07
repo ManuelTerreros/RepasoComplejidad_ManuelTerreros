@@ -16,8 +16,14 @@ public class Controller {
 		//ejecutarRecursividad();
 		//crearLista();
 		registrarPersona();
+		//ejecutarNumeroMayor();
 	}
 	
+	private void ejecutarNumeroMayor() {
+		lista.retornarNumeroMayor();
+		
+	}
+
 	public void ejecutarRecursividad() {
 		double num;
 		view.message("Ingrese la cantidad de frutas disponibles");
@@ -29,6 +35,7 @@ public class Controller {
 	public void crearLista() {
 		lista.registrarTabla();
 		lista.listarPersonas();
+		//lista.retornarNumeroMayor();
 	}
 	
 	public void registrarPersona() {
@@ -37,19 +44,21 @@ public class Controller {
 		String nombre, fechas;
 		int numerAleatoio = rd.nextInt(100)+1;
 		
+		lista.registrarTabla();
+		
 		view.message("Ingrese el nombre de la persona: ");
 		nombre = view.insertarString();
 		
 		view.message("Ingrese su fecha de nacimiento (AAAA/MM/DD)");
 		fechas = view.insertarString();
 		
-		lista.registrarTabla();
-		
-		lista.guardarPersona(new Persona(nombre, fechas, numerAleatoio));
-		
+        lista.guardarPersona(new Persona(nombre, fechas, 80));
 		lista.listarPersonas();
 		
+		
+		
 	}
+	
 	
 	
 
