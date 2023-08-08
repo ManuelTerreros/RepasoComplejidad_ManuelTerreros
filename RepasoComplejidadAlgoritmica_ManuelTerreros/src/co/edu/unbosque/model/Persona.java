@@ -15,7 +15,7 @@ public class Persona {
 	
 	
 	/**
-	 * Metodo constructor de la clase
+	 * Método constructor de la clase.
 	 * @param nombre Va a ser un parámetro de tipo string el cual 
 	 * el usuario deberá ingresarlo.
 	 * @param fechaNacimiento Va a ser un parametro de tipo string el cual el 

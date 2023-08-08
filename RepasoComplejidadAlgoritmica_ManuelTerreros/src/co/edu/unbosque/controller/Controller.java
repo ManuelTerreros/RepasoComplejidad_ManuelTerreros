@@ -11,7 +11,7 @@ import co.edu.unbosque.model.Recursividad;
 import co.edu.unbosque.view.View;
 
 /**
- * Clase controller que respetará el patron mvc y 
+ * Clase controller que respetara el patron mvc y 
  * conectara a la vista con la logica del negocio sin que se conozcan.
  * 
  * Implementa ActionListener
@@ -40,10 +40,11 @@ public class Controller implements ActionListener {
 	
 	
 	/**
-	 * Ejecuta el menú para realizar
+	 * Ejecuta el menu para realizar
 	 * interacciones entre los ejercicios.
 	 */
 	public void iniciarComponentes() {
+		try {
 		int opcion = vista.pedirInt("1. Listado de personas"+"\n"+
 									  "2. Arboles"+"\n"+
 									  "3. Recursividad"+"\n"+
@@ -54,7 +55,9 @@ public class Controller implements ActionListener {
 				lista.registrarTabla();
 				break;
 			case 2:
-				System.out.println("");
+				vista.mostrarResultados("Si le soy sincero profe, no "
+						+ "logré desarrollar nada de árboles"+"\n"+
+						"Me gustaría tomar una tutoria para repasarlos...");
 				break;
 			case 3: 
 				ejecutarRecursividad();
@@ -65,6 +68,9 @@ public class Controller implements ActionListener {
 			default:
 				vista.mostrarResultados("Opción no válida");
 			}
+		}catch(NumberFormatException e) {
+			vista.mostrarResultados("Formato incorrecto, Bye!");
+		}
 	}
 
 	/**
@@ -87,7 +93,7 @@ public class Controller implements ActionListener {
 	/**
 	 *Metodo que permite realizar las acciones necesarias,
 	 *conecta algunos metodos del modelo con la vista y 
-	 *verifca las operciones.
+	 *verifca las operaciones.
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {

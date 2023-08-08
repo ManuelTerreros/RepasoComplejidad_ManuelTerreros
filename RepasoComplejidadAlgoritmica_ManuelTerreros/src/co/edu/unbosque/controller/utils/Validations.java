@@ -3,8 +3,8 @@ package co.edu.unbosque.controller.utils;
 import java.text.SimpleDateFormat;
 
 /**
- * Clase dedicada a la validación de datos  
- * y métodos peculiares.
+ * Clase dedicada a la validacion de datos  
+ * y metodos peculiares.
  * @author Manue
  *
  */
@@ -12,10 +12,10 @@ public class Validations {
 	
 	
 	/**
-	 * Este método verificara la fidelidad de 
+	 * Este metodo verificara la fidelidad de 
 	 * la fecha ingresada por el usurio
 	 * hacia el formato establecido.
-	 * @param i String que representará el valor de la
+	 * @param i String que representara el valor de la
 	 * fecha de nacimiento ingresada por el usuario.
 	 * @return tipo de dato booleano.
 	 */

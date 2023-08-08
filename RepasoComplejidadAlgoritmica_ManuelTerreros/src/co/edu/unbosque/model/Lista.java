@@ -8,8 +8,9 @@ import java.util.Date;
 import java.util.Random;
 
 /**
- * Clase que respeta el patron Facade y mantendrá las operaciones necesarias
- * para luego compartirlas con el controlador
+ * Clase que respeta el patrón Facade y mantendrá las operaciones necesarias
+ * para luego compartirlas con el controlador. 
+ * Esta clase se enfoca en el primer punto
  * @author Manue
  *
  */
@@ -18,7 +19,6 @@ public class Lista {
 	private Persona persona;
 	private Nodo inicio, fin;
 	private String resultado;
-	//private Nodo alternoI, alternoF;
 	
 	/**
 	 * Constructor de la clase Lista.
@@ -33,10 +33,10 @@ public class Lista {
 	
 	/**
 	 * Método que creará la tabla estipulada por el docente,
-	 * se realizó a parte para tener mas control de los datos 
-	 * que serán registrados por el usuario.
+	 * se realizó a parte para tener más control de los datos 
+	 * que seran registrados por el usuario.
 	 * 
-	 * @param persona Que será guardada en la lista.
+	 * @param persona Que sera guardada en la lista.
 	 */
 	public void guardarTabla(Persona persona) {
 		Nodo nuevoNodo = new Nodo(persona);
@@ -83,7 +83,7 @@ public class Lista {
 	/**
 	 * Metodo que guardará a las personas que seran registradas por el 
 	 * usuario.
-	 * @param persona Parapametro de entrada que luego se 
+	 * @param persona Parametro de entrada que luego se 
 	 * guardará en un nodo nuevo.
 	 */
 	public void guardarPersona(Persona persona) {
@@ -115,8 +115,8 @@ public class Lista {
 	
 	
 	/**
-	 * Metodo que listará todos los nodos que existan dentro de la
-	 * lista simple enlazada. El bucle while irá hasta donde el 
+	 * Método que listará todos los nodos que existan dentro de la
+	 * lista simple enlazada. El bucle while irá hasta dónde el 
 	 * ultimo nodo apunte a nulo
 	 * @return Una cadena de caracteres que representará los
 	 * atributos de persona
@@ -159,9 +159,9 @@ public class Lista {
 	
 	/**
 	 * Metodo que eliminará el nodo correspondiente usando su Id.
-	 * Ese nodo que se eliminará es el que tendrá el id mas 
+	 * Ese nodo que se eliminará es el que tendrá el id más 
 	 * alto de toda la lista.
-	 * @param id
+	 * @param id Es el id mayor de la lista, y que luego se eliminará.
 	 */
 	public void eliminarNodo(int id) {
 		Nodo nodoAux = inicio;	
@@ -188,7 +188,7 @@ public class Lista {
 	
 	/**
 	 * Método basado en el burble sort, el cual tomará el formato
-	 * yyyy/MM/dd y lo comparar con los demás nodos existentes en la lista.
+	 * yyyy/MM/dd y lo comparará con los demás nodos existentes en la lista.
 	 * La lista se organizará de manera descendente. 
 	 * 
 	 * @return Una cadena de personas organizadas de manera descendente.
@@ -240,7 +240,7 @@ public class Lista {
 	 * @param nodo1 Es el nodo actual, por el momento el nodo con fecha 
 	 * de nacimiento clasificado como mayor.
 	 * @param nodo2 Es el nodo siguiente, el cual se comparará con el nodo mayor
-	 * para 
+	 * para ser organizado dada cierta condición.
 	 */
 	public void intercambiarNodos(Nodo nodo1, Nodo nodo2) {
 	    Persona tempPersona = nodo1.getPersona();
