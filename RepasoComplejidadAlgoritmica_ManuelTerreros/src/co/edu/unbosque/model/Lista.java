@@ -7,18 +7,37 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Random;
 
+/**
+ * Clase que respeta el patron Facade y mantendrá las operaciones necesarias
+ * para luego compartirlas con el controlador
+ * @author Manue
+ *
+ */
 public class Lista {
 	
 	private Persona persona;
 	private Nodo inicio, fin;
-	private Nodo alternoI, alternoF;
+	private String resultado;
+	//private Nodo alternoI, alternoF;
 	
+	/**
+	 * Constructor de la clase Lista.
+	 */
 	public Lista() {
 		// TODO Auto-generated constructor stub
 		inicio = null;
 		fin = null;
+		resultado = "";
 	}
 	
+	
+	/**
+	 * Método que creará la tabla estipulada por el docente,
+	 * se realizó a parte para tener mas control de los datos 
+	 * que serán registrados por el usuario.
+	 * 
+	 * @param persona Que será guardada en la lista.
+	 */
 	public void guardarTabla(Persona persona) {
 		Nodo nuevoNodo = new Nodo(persona);
 			if(inicio == null ) {
@@ -31,6 +50,10 @@ public class Lista {
 			}		
 	}
 	
+	/**
+	 * Metodo que registrará los datos asignados por 
+	 * el docente y los enviará al método respectivo.
+	 */
 	public void registrarTabla() {
 		
 		Persona persona1 = new Persona("Luis Pérez","1991/12/04",10);
@@ -56,36 +79,68 @@ public class Lista {
 		guardarTabla(persona10);
 	}
 	
+	
+	/**
+	 * Metodo que guardará a las personas que seran registradas por el 
+	 * usuario.
+	 * @param persona Parapametro de entrada que luego se 
+	 * guardará en un nodo nuevo.
+	 */
 	public void guardarPersona(Persona persona) {
+		
 		Nodo nuevoNodo = new Nodo(persona);
 		int numeroMayor = retornarNumeroMayor();
 		int numeroNuevo = persona.getId();
+		String aviso = persona.getFechaNacimiento();
 		
-		if(numeroNuevo > numeroMayor) {
-			System.out.println("Funcionooooo");
-			eliminarNodo(numeroMayor);
-			System.out.println("Eliminado el nodo");
-		}else {
-			fin.setCola(nuevoNodo);
-			nuevoNodo.setCabeza(fin);	
-			fin = nuevoNodo;	
+		if(!aviso.isEmpty()) {
+			if(numeroNuevo > numeroMayor) {
+				System.out.println("Funcionooooo");
+				eliminarNodo(numeroMayor);
+				System.out.println("Eliminado el nodo");
+				
+				Nodo nodoDerecha = new Nodo(persona);
+				nodoDerecha.setCola(inicio);
+		        inicio.setCabeza(nodoDerecha);
+		        inicio = nodoDerecha;
+				
+			}else {
+				fin.setCola(nuevoNodo);
+				nuevoNodo.setCabeza(fin);	
+				fin = nuevoNodo;	
+			}
 		}
 	}
 	
-	public void listarPersonas() {
+	
+	
+	/**
+	 * Metodo que listará todos los nodos que existan dentro de la
+	 * lista simple enlazada. El bucle while irá hasta donde el 
+	 * ultimo nodo apunte a nulo
+	 * @return Una cadena de caracteres que representará los
+	 * atributos de persona
+	 */
+	public String  listarPersonas() {
 		int contador = 1;
 		Nodo aux = inicio;
-		
+		String resultado = "";
 		while(aux != null) {
-			   System.out.println("Elemento No.: "+contador + ". Nombre: " + aux.getPersona().getNombre() +
+			   resultado += "Elemento No.: "+contador + ". Nombre: " + aux.getPersona().getNombre() +
 	                    ", Fecha de Nacimiento: " + aux.getPersona().getFechaNacimiento() +
-	                    ", ID: " + aux.getPersona().getId());
+	                    ", ID: " + aux.getPersona().getId()+ "\n";
 
 	            aux = aux.getCola();
 	            contador++;
 		}
+		return resultado;
 	}
-	//---------------------------------------------------------------
+	
+	
+	/**
+	 * Metodo que buscará el numero mayor de la lista
+	 * @return Una variable de tipo entero
+	 */
 	public int retornarNumeroMayor() {
 		Nodo nodoActual = inicio;
 		int numMayor = -1;
@@ -100,6 +155,14 @@ public class Lista {
 		return numMayor;
 	}
 	
+	
+	
+	/**
+	 * Metodo que eliminará el nodo correspondiente usando su Id.
+	 * Ese nodo que se eliminará es el que tendrá el id mas 
+	 * alto de toda la lista.
+	 * @param id
+	 */
 	public void eliminarNodo(int id) {
 		Nodo nodoAux = inicio;	
 		
@@ -123,7 +186,14 @@ public class Lista {
 		}	
 	}
 	
-	public void ordenarLista() {
+	/**
+	 * Método basado en el burble sort, el cual tomará el formato
+	 * yyyy/MM/dd y lo comparar con los demás nodos existentes en la lista.
+	 * La lista se organizará de manera descendente. 
+	 * 
+	 * @return Una cadena de personas organizadas de manera descendente.
+	 */
+	public String ordenarLista() {
 		Nodo actual = inicio;
 	    Nodo siguiente;
 	    DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy/MM/dd");
@@ -150,16 +220,28 @@ public class Lista {
 			Nodo aux = inicio;
 			
 			while(aux != null) {
-				   System.out.println("Elemento No.: "+contador + ". Nombre: " + aux.getPersona().getNombre() +
+				   resultado += "Elemento No.: "+contador + ". Nombre: " + aux.getPersona().getNombre() +
 		                    ", Fecha de Nacimiento: " + aux.getPersona().getFechaNacimiento() +
-		                    ", ID: " + aux.getPersona().getId());
+		                    ", ID: " + aux.getPersona().getId()+ "\n";
 
 		            aux = aux.getCola();
 		            contador++;
 			}
-	    }
-	}
+			
+		}
+		return resultado;
+	  }
+	
 
+	/**
+	 * Metodo que será usado en el ordenamiento de la lista y 
+	 * se destinará a realizar el cambio de nodos según el orden requerido.
+	 * 
+	 * @param nodo1 Es el nodo actual, por el momento el nodo con fecha 
+	 * de nacimiento clasificado como mayor.
+	 * @param nodo2 Es el nodo siguiente, el cual se comparará con el nodo mayor
+	 * para 
+	 */
 	public void intercambiarNodos(Nodo nodo1, Nodo nodo2) {
 	    Persona tempPersona = nodo1.getPersona();
 	    nodo1.setPersona(nodo2.getPersona());

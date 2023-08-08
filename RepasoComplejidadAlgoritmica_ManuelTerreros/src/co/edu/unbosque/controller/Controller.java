@@ -1,60 +1,126 @@
 package co.edu.unbosque.controller;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Random;
 
+import co.edu.unbosque.controller.utils.Validations;
 import co.edu.unbosque.model.Lista;
 import co.edu.unbosque.model.Persona;
 import co.edu.unbosque.model.Recursividad;
-import co.edu.unbosque.view.Prueba;
-import co.edu.unbosque.view.Vista;
+import co.edu.unbosque.view.View;
 
-public class Controller {
-	private Vista view;
+/**
+ * Clase controller que respetará el patron mvc y 
+ * conectara a la vista con la logica del negocio sin que se conozcan.
+ * 
+ * Implementa ActionListener
+ * @author Manue
+ *
+ */
+public class Controller implements ActionListener {
+
 	private Recursividad recur = new Recursividad();
 	private Lista lista = new Lista();
+	private View vista = new View(this);
+	private Random rd = new Random();
+	private int numerAleatorio;
+	private Validations validaciones = new Validations();
 	
+	
+	
+	
+	/**
+	 * Controlador de la clase Controller
+	 */
 	public Controller() {
-		//ejecutarRecursividad();
-		//registrarPersona();
-		//view = new Vista();
-		//ventana();
-		probarOrdenamiento();
+		iniciarComponentes();
+		
+	}
+	
+	
+	/**
+	 * Ejecuta el menú para realizar
+	 * interacciones entre los ejercicios.
+	 */
+	public void iniciarComponentes() {
+		int opcion = vista.pedirInt("1. Listado de personas"+"\n"+
+									  "2. Arboles"+"\n"+
+									  "3. Recursividad"+"\n"+
+									  "0. Salir" );
+			switch (opcion) {
+			case 1: 
+				vista.setVisible(true);
+				lista.registrarTabla();
+				break;
+			case 2:
+				System.out.println("");
+				break;
+			case 3: 
+				ejecutarRecursividad();
+				break;
+			case 0:
+				vista.mostrarResultados("Hasta luego, Buen día");
+				break;
+			default:
+				vista.mostrarResultados("Opción no válida");
+			}
 	}
 
+	/**
+	 * Ejecuta el metodo recursivo de modelo
+	 */
 	public void ejecutarRecursividad() {
 		double num;
-		view.message("Ingrese la cantidad de frutas disponibles");
-		num = view.insertarDouble();
-		//return recur.comerFruta(num);
-		view.message(recur.mostrarRecorrido(num));
+		try {
+			num = vista.pedirDouble("Ingrese fruta disponible");
+			vista.mostrarResultados(recur.mostrarRecorrido(num));
+		}catch(Exception e) {
+			vista.mostrarResultados("Error de dato ingresado");
+			iniciarComponentes();
+		}
+		iniciarComponentes();
+		
 	}
 	
-	public void registrarPersona() {
-		
-		Random rd = new Random();
-		String nombre, fechas;
-		int numerAleatorio = rd.nextInt(100)+1;
-		
-		lista.registrarTabla();
-		
-		view.message("Ingrese el nombre de la persona: ");
-		nombre = view.insertarString();
-		
-		view.message("Ingrese su fecha de nacimiento (AAAA/MM/DD)");
-		fechas = view.insertarString();
-		
-        lista.guardarPersona(new Persona(nombre, fechas, 32));
-		lista.listarPersonas();
-	}
 	
-	public void ventana() {
-		Prueba pruebis = new Prueba();
-		pruebis.setVisible(true);
-	}
-
-	public void probarOrdenamiento() {
-		lista.registrarTabla();
-		lista.ordenarLista();
+	/**
+	 *Metodo que permite realizar las acciones necesarias,
+	 *conecta algunos metodos del modelo con la vista y 
+	 *verifca las operciones.
+	 */
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+		if(e.getActionCommand().equals(vista.AGREGAR)) {
+			numerAleatorio = rd.nextInt(101);
+			String comprobar = vista.getNacimientoArea().getText();
+			if(validaciones.validarNacimiento(comprobar)) {
+				lista.guardarPersona(new Persona(vista.getNombreArea().getText(), vista.getNacimientoArea().getText(), numerAleatorio));
+			}else {
+				vista.mostrarResultados("Formato de fecha incorrecto");
+			}
+			 
+		}
+		else if(e.getActionCommand().equals(vista.SALIR)) {
+			vista.setVisible(false);
+			iniciarComponentes();
+			
+		}
+		
+		else if(e.getActionCommand().equals(vista.ORDENAR)) {
+			
+			try {
+				vista.getListaAux().setText(lista.ordenarLista());
+			}catch(Exception e1) {
+				vista.mostrarResultados("Error, formato de fecha Incorrecto");
+			}
+			
+		}
+		else if(e.getActionCommand().equals(vista.LISTAR)) {
+			vista.getListaNormal().setText(lista.listarPersonas());
+		}
+		
 	}
 	
 
